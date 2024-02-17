@@ -8,3 +8,4 @@ dnspython
 aiohttp
 pytz
 bs4
+requests==2.31.0
