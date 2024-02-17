@@ -7,3 +7,4 @@ dnspython
 # --- For-Web-Response ------- #
 aiohttp
 pytz
+bs4
