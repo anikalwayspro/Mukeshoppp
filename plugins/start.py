@@ -24,125 +24,98 @@ from database.database import add_user, del_user, full_userbase, present_user
     
     
 
-# @Bot.on_message(filters.command('start') & filters.private & subscribed)
-# async def start_command(client: Client, message: Message):
+@Bot.on_message(filters.command('start') & filters.private & subscribed)
+async def start_command(client: Client, message: Message):
     
-#     id = message.from_user.id
-#     if not await present_user(id):
-#         try:
-#             await add_user(id)
-#         except:
-#             pass
-#     text = message.text
-#     if len(text)>7:
-#         try:
-#             base64_string = text.split(" ", 1)[1]
-#         except:
-#             return
-#         string = await decode(base64_string)
-#         argument = string.split("-")
-#         if len(argument) == 3:
-#             try:
-#                 start = int(int(argument[1]) / abs(client.db_channel.id))
-#                 end = int(int(argument[2]) / abs(client.db_channel.id))
-#             except:
-#                 return
-#             if start <= end:
-#                 ids = range(start,end+1)
-#             else:
-#                 ids = []
-#                 i = start
-#                 while True:
-#                     ids.append(i)
-#                     i -= 1
-#                     if i < end:
-#                         break
-#         # if len(message.command) != 2:
-#         #     data = message.command[1]
+    id = message.from_user.id
+    if not await present_user(id):
+        try:
+            await add_user(id)
+        except:
+            pass
+    text = message.text
+    if len(text)>7:
+        try:
+            base64_string = text.split(" ", 1)[1]
+        except:
+            return
+        string = await decode(base64_string)
+        argument = string.split("-")
+        if len(argument) == 3:
+            try:
+                start = int(int(argument[1]) / abs(client.db_channel.id))
+                end = int(int(argument[2]) / abs(client.db_channel.id))
+            except:
+                return
+            if start <= end:
+                ids = range(start,end+1)
+            else:
+                ids = []
+                i = start
+                while True:
+                    ids.append(i)
+                    i -= 1
+                    if i < end:
+                        break
+        if len(message.command) != 2:
+            data = message.command[1]
 
-#         #     if data.split("-", 1)[0] == "verify":
-#         #         userid = data.split("-", 2)[1]
-#         #         token = data.split("-", 3)[2]
-#         #         if str(message.from_user.id) != str(userid):
-#         #             return await message.reply_text(
-#         #                 text="<b>ᴇxᴘɪʀᴇᴅ ʟɪɴᴋ ᴏʀ ɪɴᴠᴀʟɪᴅ ʟɪɴᴋ !</b>",
-#         #                 protect_content=True
-#         #             )
-#         #         is_valid = await check_token(bot, userid, token)
-#         #         if is_valid == True:
-#         #             await message.reply_text(
-#         #                 text=f"<b>ʜᴇʟʟᴏ {message.from_user.mention} 👋,\nʏᴏᴜ ᴀʀᴇ sᴜᴄᴄᴇssғᴜʟʟʏ ᴠᴇʀɪғɪᴇᴅ !\n\nɴᴏᴡ ʏᴏᴜ ʜᴀᴠᴇ ᴜɴʟɪᴍɪᴛᴇᴅ ᴀᴄᴄᴇss ғᴏʀ ᴀʟʟ ᴜʀʟ ᴜᴘʟᴏᴀᴅɪɴɢ ᴛɪʟʟ ᴛᴏᴅᴀʏ ᴍɪᴅɴɪɢʜᴛ.</b>",
-#         #                 protect_content=True
-#         #             )
-#         #             await verify_user(bot, userid, token)
-#         #         else:
-#         #             return await message.reply_text(
-#         #                 text="<b>ᴇxᴘɪʀᴇᴅ ʟɪɴᴋ ᴏʀ ɪɴᴠᴀʟɪᴅ ʟɪɴᴋ !</b>",
-#         #                 protect_content=True
-#         #             )
-#         elif len(argument) == 2:
-#             try:
-#                 ids = [int(int(argument[1]) / abs(client.db_channel.id))]
-#             except:
-#                 return
-#         temp_msg = await message.reply("Please wait...")
-#         try:
-#             messages = await get_messages(client, ids)
-#         except:
-#             await message.reply_text("Something went wrong..!")
-#             return
-#         await temp_msg.delete()
+            if data.split("-", 1)[0] == "verify":
+                userid = data.split("-", 2)[1]
+                token = data.split("-", 3)[2]
+                if str(message.from_user.id) != str(userid):
+                    return await message.reply_text(
+                        text="<b>ᴇxᴘɪʀᴇᴅ ʟɪɴᴋ ᴏʀ ɪɴᴠᴀʟɪᴅ ʟɪɴᴋ !</b>",
+                        protect_content=True
+                    )
+                is_valid = await check_token(bot, userid, token)
+                if is_valid == True:
+                    await message.reply_text(
+                        text=f"<b>ʜᴇʟʟᴏ {message.from_user.mention} 👋,\nʏᴏᴜ ᴀʀᴇ sᴜᴄᴄᴇssғᴜʟʟʏ ᴠᴇʀɪғɪᴇᴅ !\n\nɴᴏᴡ ʏᴏᴜ ʜᴀᴠᴇ ᴜɴʟɪᴍɪᴛᴇᴅ ᴀᴄᴄᴇss ғᴏʀ ᴀʟʟ ᴜʀʟ ᴜᴘʟᴏᴀᴅɪɴɢ ᴛɪʟʟ ᴛᴏᴅᴀʏ ᴍɪᴅɴɪɢʜᴛ.</b>",
+                        protect_content=True
+                    )
+                    await verify_user(bot, userid, token)
+                else:
+                    return await message.reply_text(
+                        text="<b>ᴇxᴘɪʀᴇᴅ ʟɪɴᴋ ᴏʀ ɪɴᴠᴀʟɪᴅ ʟɪɴᴋ !</b>",
+                        protect_content=True
+                    )
+        elif len(argument) == 2:
+            try:
+                ids = [int(int(argument[1]) / abs(client.db_channel.id))]
+            except:
+                return
+        temp_msg = await message.reply("Please wait...")
+        try:
+            messages = await get_messages(client, ids)
+        except:
+            await message.reply_text("Something went wrong..!")
+            return
+        await temp_msg.delete()
 
-#         for msg in messages:
+        for msg in messages:
 
-#             if bool(CUSTOM_CAPTION) & bool(msg.document):
-#                 caption = CUSTOM_CAPTION.format(previouscaption = "" if not msg.caption else msg.caption.html, filename = msg.document.file_name)
-#             else:
-#                 caption = "" if not msg.caption else msg.caption.html
+            if bool(CUSTOM_CAPTION) & bool(msg.document):
+                caption = CUSTOM_CAPTION.format(previouscaption = "" if not msg.caption else msg.caption.html, filename = msg.document.file_name)
+            else:
+                caption = "" if not msg.caption else msg.caption.html
 
-#             if DISABLE_CHANNEL_BUTTON:
-#                 reply_markup = msg.reply_markup
-#             else:
-#                 reply_markup = None
+            if DISABLE_CHANNEL_BUTTON:
+                reply_markup = msg.reply_markup
+            else:
+                reply_markup = None
 
-#             try:
-#                 await msg.copy(chat_id=message.from_user.id, caption = caption, parse_mode = ParseMode.HTML, reply_markup = reply_markup, protect_content=PROTECT_CONTENT)
-#                 await asyncio.sleep(0.5)
-#             except FloodWait as e:
-#                 await asyncio.sleep(e.x)
-#                 await msg.copy(chat_id=message.from_user.id, caption = caption, parse_mode = ParseMode.HTML, reply_markup = reply_markup, protect_content=PROTECT_CONTENT)
-#             except:
-#                 pass
-#         return
-#     else:
-#         reply_markup = InlineKeyboardMarkup(
-#             [
-#                 [
-#                     InlineKeyboardButton("😊 About Me", callback_data = "about"),
-#                     InlineKeyboardButton("🔒 Close", callback_data = "close")
-#                 ]
-#             ]
-#         )
-#         await message.reply_text(
-#             text = START_MSG.format(
-#                 first = message.from_user.first_name,
-#                 last = message.from_user.last_name,
-#                 username = None if not message.from_user.username else '@' + message.from_user.username,
-#                 mention = message.from_user.mention,
-#                 id = message.from_user.id
-#             ),
-#             reply_markup = reply_markup,
-#             disable_web_page_preview = True,
-#             quote = True
-#         )
-#         return
-
-
-
-@Bot.on_message(filters.private & filters.command(["start"]))
-async def start(bot, update):
-    message=update
-    reply_markup = InlineKeyboardMarkup(
+            try:
+                await msg.copy(chat_id=message.from_user.id, caption = caption, parse_mode = ParseMode.HTML, reply_markup = reply_markup, protect_content=PROTECT_CONTENT)
+                await asyncio.sleep(0.5)
+            except FloodWait as e:
+                await asyncio.sleep(e.x)
+                await msg.copy(chat_id=message.from_user.id, caption = caption, parse_mode = ParseMode.HTML, reply_markup = reply_markup, protect_content=PROTECT_CONTENT)
+            except:
+                pass
+        return
+    else:
+        reply_markup = InlineKeyboardMarkup(
             [
                 [
                     InlineKeyboardButton("😊 About Me", callback_data = "about"),
@@ -150,44 +123,21 @@ async def start(bot, update):
                 ]
             ]
         )
-    
-    if len(update.command) != 2:
-      
-        await bot.send_message(
-            chat_id=update.chat.id,
-            text=START_MSG.format(
+        await message.reply_text(
+            text = START_MSG.format(
                 first = message.from_user.first_name,
                 last = message.from_user.last_name,
                 username = None if not message.from_user.username else '@' + message.from_user.username,
                 mention = message.from_user.mention,
                 id = message.from_user.id
             ),
-            reply_markup=reply_markup,
-            reply_to_message_id=update.id
+            reply_markup = reply_markup,
+            disable_web_page_preview = True,
+            quote = True
         )
         return
-    data = update.command[1]
 
-    if data.split("-", 1)[0] == "verify":
-        userid = data.split("-", 2)[1]
-        token = data.split("-", 3)[2]
-        if str(update.from_user.id) != str(userid):
-            return await update.reply_text(
-                text="<b>ᴇxᴘɪʀᴇᴅ ʟɪɴᴋ ᴏʀ ɪɴᴠᴀʟɪᴅ ʟɪɴᴋ !</b>",
-                protect_content=True
-            )
-        is_valid = await check_token(bot, userid, token)
-        if is_valid == True:
-            await update.reply_text(
-                text=f"<b>ʜᴇʟʟᴏ {update.from_user.mention} 👋,\nʏᴏᴜ ᴀʀᴇ sᴜᴄᴄᴇssғᴜʟʟʏ ᴠᴇʀɪғɪᴇᴅ !\n\nɴᴏᴡ ʏᴏᴜ ʜᴀᴠᴇ ᴜɴʟɪᴍɪᴛᴇᴅ ᴀᴄᴄᴇss ғᴏʀ ᴀʟʟ ᴜʀʟ ᴜᴘʟᴏᴀᴅɪɴɢ ᴛɪʟʟ ᴛᴏᴅᴀʏ ᴍɪᴅɴɪɢʜᴛ.</b>",
-                protect_content=True
-            )
-            await verify_user(bot, userid, token)
-        else:
-            return await update.reply_text(
-                text="<b>ᴇxᴘɪʀᴇᴅ ʟɪɴᴋ ᴏʀ ɪɴᴠᴀʟɪᴅ ʟɪɴᴋ !</b>",
-                protect_content=True
-            ) 
+    
 #=====================================================================================##
 
 WAIT_MSG = """"<b>Processing ...</b>"""
